@@ -1,0 +1,20 @@
+<div class="row">
+	<div class="col-12">
+		<div class="alert alert-success" role="alert">
+			Comp. Emissor
+		</div>
+	</div>
+</div>
+
+<div class="row">
+ 	<div class="form-group col-12 mt-1">
+    <label>Informe uma música:</label>
+    <div class="input-group">
+		<input type="text" class="form-control" #viaService>
+      <span class="input-group-btn ml-1">
+        <button class="btn btn-dark" type="button" (click)="enviarViaService(viaService.value)">Next!</button>
+      </span>
+    </div>
+    <small class="form-text text-muted">Enviado via service</small>
+  </div>
+</div>
