@@ -19,7 +19,7 @@ export class ArtistaListComponent implements OnInit {
     nome: '',
     generoMusical: '',
     paisDeOrigem: '',
-    integrantes: [],
+    integrantes: '',
     id: 0
   };
 

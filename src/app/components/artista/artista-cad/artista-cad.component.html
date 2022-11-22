@@ -27,11 +27,11 @@
 
             <div class="form-element">
                 <span class="p-float-label">
-                    <textarea inputId="textarea" rows="8" style="resize: none; background: #1e1e1e;" cols="50" [(ngModel)]="aux"
+                    <textarea inputId="textarea" rows="8" style="resize: none; background: #1e1e1e;" cols="50" [(ngModel)]="artista.integrantes"
                          pInputTextarea></textarea>
                     <label for="textarea">Integrantes</label>
                 </span>
-                <small class="p-invalid" *ngIf="!submitted && !aux">O campo deve possuir integrantes!</small>
+                <small class="p-invalid" *ngIf="!submitted && !artista.integrantes">O campo deve possuir integrantes!</small>
             </div>
             
             
