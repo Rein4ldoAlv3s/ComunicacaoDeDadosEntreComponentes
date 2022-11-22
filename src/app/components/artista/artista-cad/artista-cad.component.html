@@ -1,0 +1,58 @@
+<div id="div-separation">
+    <div class="div-cad">
+        <div id="form-div">
+            <h2>Informe os dados do artista:</h2>
+            <div class="form-element">
+                <span class="p-float-label">
+                    <input [(ngModel)]="artista.nome" type="text" id="inputtext" pInputText>
+                    <label for="inputtext">Nome do artista ou banda</label>
+                </span>
+                <small class="p-invalid" *ngIf="!submitted && !artista.nome">O campo deve possuir nome!</small>
+            </div>
+            <div class="form-element">
+                <span class="p-float-label">
+                    <input id="float-input" type="text" pInputText [(ngModel)]="artista.generoMusical">
+                    <label for="float-input">Gênero Musical</label>
+                </span>
+                <small class="p-invalid" *ngIf="!submitted && !artista.generoMusical">O campo deve possuir Gênero Musical!</small>
+            </div>
+            <div class="form-element">
+                <span class="p-float-label">
+                    <input id="float-input" type="text" pInputText [(ngModel)]="artista.paisDeOrigem">
+                    <label for="float-input">País de Origem</label>
+                </span>
+                <small class="p-invalid" *ngIf="!submitted && !artista.paisDeOrigem">O campo deve possuir País de Origem!</small>
+            </div>
+
+
+            <div class="form-element">
+                <span class="p-float-label">
+                    <textarea inputId="textarea" rows="8" style="resize: none; background: #1e1e1e;" cols="50" [(ngModel)]="aux"
+                         pInputTextarea></textarea>
+                    <label for="textarea">Integrantes</label>
+                </span>
+                <small class="p-invalid" *ngIf="!submitted && !aux">O campo deve possuir integrantes!</small>
+            </div>
+            
+            
+            <button *ngIf="edit===false; else elseBlock" pButton pRipple type="button" label="Cadastrar" (click)="create()"
+            class="p-button-outlined"></button>
+
+            <ng-template #elseBlock >   
+                <div style="display: flex; justify-content: space-evenly; align-items: center;">
+                    <button pButton pRipple type="button" label="Editar" (click)="editButton()"
+                    class="p-button-outlined"></button>
+
+                    <button pButton pRipple type="button" label="Cancelar" (click)="cancel()"
+                    class="p-button-outlined p-button-danger"></button>
+                </div>
+            </ng-template> 
+
+        </div>
+    </div>
+
+    <app-artista-list id="div-list" (editEventEmitter)="movieSelectedEventEmitter($event)"></app-artista-list>
+
+</div>
+
+

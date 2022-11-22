@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VisualizadorComponent } from './visualizador.component';
+import { ArtistaCadComponent } from './artista-cad.component';
 
-describe('VisualizadorComponent', () => {
-  let component: VisualizadorComponent;
-  let fixture: ComponentFixture<VisualizadorComponent>;
+describe('ArtistaCadComponent', () => {
+  let component: ArtistaCadComponent;
+  let fixture: ComponentFixture<ArtistaCadComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ VisualizadorComponent ]
+      declarations: [ ArtistaCadComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(VisualizadorComponent);
+    fixture = TestBed.createComponent(ArtistaCadComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
