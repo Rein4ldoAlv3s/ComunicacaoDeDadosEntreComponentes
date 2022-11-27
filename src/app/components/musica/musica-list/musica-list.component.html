@@ -1,13 +1,13 @@
 <div style="display:flex; flex-direction:column; padding-right: 14px;">
 
     <p-table #dt [resizableColumns]="true" [scrollable]="true" styleClass="p-datatable-gridlines"
-        responsiveLayout="scroll" [columns]="cols" [value]="artistas" [paginator]="true" [rows]="15"
+        responsiveLayout="scroll" [columns]="cols" [value]="musicas" [paginator]="true" [rows]="15"
         [rowsPerPageOptions]="[15,20,50]" totalRecords:4 pageLinks:3>
         <ng-template pTemplate="caption">
             <div style="display: flex; justify-content: space-between;
         align-items: flex-end;">
                 <div style="font-size: 2rem; ">
-                    <h3>Artistas</h3>
+                    <h3>Músicas</h3>
                 </div>
                 <div>
                     <input type="text" pInputText size="50" placeholder="Pesquisar"
@@ -20,39 +20,39 @@
         <ng-template pTemplate="header">
             <tr>
                 <th pResizableColumn style="flex-basis:20%" [style]="{'width':'150px'}">
-                    Nome
+                    Música
+                </th>
+                <th pResizableColumn style="flex-basis:20%" [style]="{'width':'150px'}">
+                    Artista
+                </th>
+                <th pResizableColumn style="flex-basis:20%" [style]="{'width':'150px'}">
+                    Integrantes
                 </th>
                 <th pResizableColumn style="flex-basis:20%" [style]="{'width':'150px'}">
                     Gênero Musical
-                </th>
-                <th pResizableColumn style="flex-basis:20%" [style]="{'width':'150px'}">
-                    País de Origem
-                </th>
-                <th pResizableColumn style="flex-basis:20%" [style]="{'width':'150px'}">
-                    País de Origem
                 </th>
                 <th pResizableColumn style="flex-basis:20%" [style]="{'width':'150px'}">
 
                 </th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-artista>
+        <ng-template pTemplate="body" let-musica>
             <tr>
 
-                <td style="flex-basis:20%" [style]="{'width':'150px'}">{{artista.nome}}</td>
-                <td style="flex-basis:20%" [style]="{'width':'150px'}">{{artista.generoMusical}}</td>
-                <td style="flex-basis:20%" [style]="{'width':'150px'}">{{artista.paisDeOrigem}}</td>
-                <td style="flex-basis:20%" [style]="{'width':'150px'}">{{artista.integrantes}}</td>
+                <td style="flex-basis:20%" [style]="{'width':'150px'}">{{musica.nome}}</td>
+                <td style="flex-basis:20%" [style]="{'width':'150px'}">{{musica.artista.nome}}</td>
+                <td style="flex-basis:20%" [style]="{'width':'150px'}">{{musica.artista.integrantes}}</td>
+                <td style="flex-basis:20%" [style]="{'width':'150px'}">{{musica.artista.generoMusical}}</td>
                 <td style="flex-basis:20%" [style]="{'width':'150px'}">
 
-                    <button pButton pRipple type="button" (click)="showArtista(artista.id)" icon="pi pi-eye"
+                    <button pButton pRipple type="button" (click)="showMusica(musica.id)" icon="pi pi-eye"
                         class="p-button-rounded p-button-text"></button>
 
-                    <button pButton pRipple type="button" (click)="editArtista(artista)" icon="pi pi-pencil"
+                    <button pButton pRipple type="button" (click)="editMusica(musica.id)" icon="pi pi-pencil"
                         class="p-button-rounded p-button-text"></button>
 
                     
-                    <button pButton pRipple type="button" icon="pi pi-trash" (click)="deleteById(artista)"  
+                    <button pButton pRipple type="button" icon="pi pi-trash" (click)="deleteById(musica)"  
                         class="p-button-rounded p-button-text">
                         
                     
@@ -65,16 +65,16 @@
 
 <p-toast></p-toast>
 <p-confirmPopup ></p-confirmPopup>
-<p-dialog header="Mais informações" [(visible)]="artistaShowDialog" [style]="{width: '50vw'}" [baseZIndex]="10000">
+<p-dialog header="Mais informações" [(visible)]="musicaShowDialog" [style]="{width: '50vw'}" [baseZIndex]="10000">
 
     <div style="font-size: 1.2rem;">
-        <p style="font-weight: bold; color: rgba(204, 204, 204, 0.57); font-size: 1.3rem">Nome </p>
-        <p> {{artista.nome}} </p><br>
-        <p style="font-weight: bold; color: rgba(204, 204, 204, 0.57); font-size: 1.3rem">Gênero Musical </p>
-        <p> {{artista.generoMusical}} </p><br>
-        <p style="font-weight: bold; color: rgba(204, 204, 204, 0.57); font-size: 1.3rem">País de Origem </p>
-        <p> {{artista.paisDeOrigem}} </p><br>
+        <p style="font-weight: bold; color: rgba(204, 204, 204, 0.57); font-size: 1.3rem">Música </p>
+        <p> {{musica.nome}} </p><br>
+        <p style="font-weight: bold; color: rgba(204, 204, 204, 0.57); font-size: 1.3rem">Artista </p>
+        <p> {{musica.artista.nome}} </p><br>
         <p style="font-weight: bold; color: rgba(204, 204, 204, 0.57); font-size: 1.3rem">Integrantes </p>
-        <p> {{artista.integrantes}} </p><br>
+        <p> {{musica.artista.integrantes}} </p><br>
+        <p style="font-weight: bold; color: rgba(204, 204, 204, 0.57); font-size: 1.3rem">Gênero Musical </p>
+        <p> {{musica.artista.generoMusical}} </p><br>
     </div>
 </p-dialog>

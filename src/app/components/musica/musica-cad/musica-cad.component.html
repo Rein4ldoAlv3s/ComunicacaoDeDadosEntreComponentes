@@ -1,0 +1,62 @@
+<div id="div-separation">
+    <div class="div-cad">
+        <div id="form-div">
+            <h2>Informe os dados da música:</h2>
+            <div class="form-element">
+                <span class="p-float-label">
+                    <input [(ngModel)]="musica.nome" type="text" id="inputtext" (change)="changeValue(musica)" pInputText>
+                    <label for="inputtext">Nome da música</label>
+                </span>
+                <small class="p-invalid" *ngIf="!submitted && !musica.nome">O campo deve possuir nome!</small>
+            </div>
+            <div class="form-element">
+                <span class="p-float-label">
+                    <p-autoComplete 
+                    inputId="autocomplete"
+                    [(ngModel)]="musica.artista"
+                    [suggestions]="filteredArtistas"
+                    (completeMethod)="searchMusica($event)"
+                    field="nome"
+                    (change)="changeValue(musica)"
+                    >
+                    </p-autoComplete>
+                    <label for="float-input">Artista</label>
+                </span>
+                <small class="p-invalid" *ngIf="!submitted && !musica.artista">O campo deve possuir Gênero Musical!</small>
+            </div>
+            <div class="form-element">
+                <span class="p-float-label">
+                    <textarea inputId="textarea" rows="8" style="resize: none; background: #1e1e1e;" cols="50" [(ngModel)]="musica.letraDaMusica"
+                         pInputTextarea (change)="changeValue(musica)"></textarea>
+                    <label for="textarea">Letra da música</label>
+                </span>
+                <small class="p-invalid" *ngIf="!submitted && !musica.letraDaMusica">O campo deve possuir letra da música!</small>
+            </div>
+            <div class="form-element">
+                <span class="p-float-label">
+                    <textarea inputId="textarea" rows="8" style="resize: none; background: #1e1e1e;" cols="50" [(ngModel)]="musica.traducao"
+                         pInputTextarea (change)="changeValue(musica)"></textarea>
+                    <label for="textarea" >Tradução</label>
+                </span>
+                <small class="p-invalid" *ngIf="!submitted && !musica.traducao">O campo deve possuir tradução!</small>
+            </div>
+
+            <div style="display: flex; justify-content: space-evenly; align-items: center;">
+                <button *ngIf="cadastrarButton===true" pButton pRipple type="button" label="Cadastrar" (click)="create()"
+                class="p-button-outlined"></button>
+
+                <button *ngIf="editarButton===true" pButton pRipple type="button" label="Editar" (click)="editButton()"
+                class="p-button-outlined"></button>
+
+                <button *ngIf="cancelarButton===true" pButton pRipple type="button" label="Cancelar" (click)="cancel()"
+                class="p-button-outlined p-button-danger"></button>
+            </div>
+
+        </div>
+    </div>
+
+    <app-musica-list id="div-list" (editEventEmitter)="movieSelectedEventEmitter($event)"></app-musica-list>
+
+</div>
+
+

@@ -20,6 +20,11 @@ export class ArtistaService {
         return this.http.get<Artista[]>(url);
     }
 
+    findByNome(nome : string): Observable<Artista[]>{
+        const url = this.baseUrl + "/artistas/nomeArtista?nome=" + nome;
+        return this.http.get<Artista[]>(url);
+    }
+
     findById(id : any): Observable<Artista>{
         const url = this.baseUrl + "/artistas/" + id;
         return this.http.get<Artista>(url);

@@ -1,0 +1,39 @@
+#form-div{
+    padding: 19px 20px;
+    max-width: 430px;
+    display: flex;
+    flex-direction: column;
+}
+
+#form-div h2{
+    padding-bottom: 13px;
+}
+
+.form-element{
+    margin-bottom: .8rem;
+}
+
+.p-inputtext{
+    width: 100%;
+}
+
+.p-button{
+    width: 150px;
+    align-self: center;
+}
+
+#div-separation {
+    display: flex;
+
+}
+
+#div-list {
+    flex: 1;
+    margin-top: 18px;
+    margin-left: 50px;
+
+}
+
+.p-invalid{
+    color: red;
+}

@@ -37,7 +37,11 @@ import {RatingModule} from 'primeng/rating';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {InputNumberModule} from 'primeng/inputnumber';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
- 
+import { HomeComponent } from './components/home/home.component';
+import { AlbumComponent } from './components/album/album.component';
+import { MusicaListComponent } from './components/musica/musica-list/musica-list.component';
+import { AutoCompleteModule } from "primeng/autocomplete";
+import { MusicaCadComponent } from './components/musica/musica-cad/musica-cad.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +49,10 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     ArtistaCadComponent,
     ArtistaListComponent,
     HeaderComponent,
-    
+    HomeComponent,
+    AlbumComponent,
+    MusicaListComponent,
+    MusicaCadComponent
   ],
   imports: [
     BrowserModule,
@@ -82,7 +89,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     RadioButtonModule,
     InputNumberModule,
     ConfirmDialogModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AutoCompleteModule
 
   ],
   providers: [MessageService, ConfirmationService],

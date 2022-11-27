@@ -60,7 +60,8 @@ export class ArtistaListComponent implements OnInit {
     
 
     editArtista(artista: Artista){
-      this.editEventEmitter.emit(artista)      
+      this.editEventEmitter.emit(artista)     
+      console.log(artista) 
     }
 
    

@@ -12,7 +12,7 @@ import { FormControl, Validators } from '@angular/forms';
   templateUrl: './artista-cad.component.html',
   styleUrls: ['./artista-cad.component.css']
 })
-export class ArtistaCadComponent {
+export class ArtistaCadComponent implements OnInit{
   
   artista: Artista = {
     nome: '',
@@ -21,8 +21,9 @@ export class ArtistaCadComponent {
     integrantes: ''
   }
 
-
-  edit: boolean = false;
+  cadastrarButton: boolean = false;
+  cancelarButton: boolean = false;
+  editarButton: boolean = false;
 
   @ViewChild(ArtistaListComponent)
   private artistaListComponent: ArtistaListComponent
@@ -36,6 +37,10 @@ export class ArtistaCadComponent {
     private primengConfig: PrimeNGConfig
   ) 
   { }
+  
+  ngOnInit(): void {
+    this.cadastrarButton = true
+  }
 
   create(){
     this.service.create(this.artista).subscribe(data => {
@@ -44,8 +49,10 @@ export class ArtistaCadComponent {
       this.messageService.add({severity:'success', detail: this.artista.nome + ' foi cadastrado!'});
       this.artista = {},
       this.submitted = true;
+      this.cancelarButton = false
 
     }, err => {
+      this.cancelarButton = false
       console.log(err)
       this.submitted = false;
       if(err.error.error.match('Erro')){
@@ -61,7 +68,9 @@ export class ArtistaCadComponent {
   }
 
   movieSelectedEventEmitter(artista: Artista): void {
-      this.edit = true,
+      this.editarButton = true,
+      this.cadastrarButton = false
+      this.cancelarButton = true
       this.artista.integrantes = artista.integrantes,
       this.artista.id = artista.id,
       this.artista.nome = artista.nome,
@@ -75,8 +84,25 @@ export class ArtistaCadComponent {
    this.artista.generoMusical = '';
    this.artista.paisDeOrigem = '';
    this.artista.integrantes = '';
-   this.edit = false
    this.submitted = true;
+   this.cadastrarButton = true;
+   this.cancelarButton = false;
+   this.editarButton = false
+
+  }
+
+  changeValue(artista: Artista){
+    console.log(artista)
+    if(artista.nome === '' && artista.generoMusical === '' && artista.paisDeOrigem === '' && artista.integrantes === ''){
+      console.log(artista)
+      this.cancelarButton = false
+      this.editarButton = false
+      this.cadastrarButton = true
+    }
+    else{
+      this.cancelarButton = true;
+    }
+    
   }
 
   editButton(){
@@ -86,9 +112,9 @@ export class ArtistaCadComponent {
       this.artistaListComponent.getAllArtistas(),
       this.artista = {}
     });
-    this.edit = false
     this.messageService.add({severity:'success', detail: this.artista.nome + ' foi atualizado!'});
     this.submitted = true;
+    this.cancelarButton = false
   }
 
   
