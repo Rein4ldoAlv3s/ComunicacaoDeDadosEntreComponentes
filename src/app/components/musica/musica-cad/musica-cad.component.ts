@@ -78,21 +78,24 @@ export class MusicaCadComponent implements OnInit{
     console.log(this.musica)
     this.musicaService.create(this.musica).subscribe(data => {
       this.musicaListComponent.getAllMusicas(),
-      this.messageService.add({severity:'success', detail: this.musica.nome + ' foi cadastrado!'});
       this.submitted = true;
       this.cancelarButton = false
-      this.cancel()
+      
 
     }, err => {
+      this.cancel()
       this.cancelarButton = false
       console.log(err)
       this.submitted = false;
       if(err.error.error.match('Erro')){
         this.messageService.add({severity:'error', detail: 'A música não foi cadastrada. Erro na validação dos campos!'});
       }
-      if(err.error.error.match('Já existe')){
+      if(err.error.error.match('informe um nome diferente')){
         this.messageService.add({severity:'error', detail: err.error.error});
       }
+    }, () => {
+      this.messageService.add({severity:'success', detail: this.musica.nome + ' foi cadastrado!'});
+      this.cancel()
     }
     );
     
@@ -122,13 +125,18 @@ export class MusicaCadComponent implements OnInit{
 
   editButton(){
     this.musicaService.update(this.musica).subscribe(resposta => {
-      this.musicaListComponent.getAllMusicas()
-    });
+    this.musicaListComponent.getAllMusicas()
     this.edit = false
     this.messageService.add({severity:'success', detail: this.musica.nome + ' foi atualizado!'});
     this.submitted = true;
     this.cancelarButton = false
     this.cancel()
+    }, err =>{
+      if(err.error.error.match('Já existe')){
+        this.messageService.add({severity:'error', detail: err.error.error});
+      }
+    });
+    
   }
 
   searchMusica(event: any) {

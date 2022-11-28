@@ -29,6 +29,7 @@ export class ArtistaListComponent implements OnInit {
 
   temporary: number = 0;
 
+
   @Output() editEventEmitter = new EventEmitter()
   
   artistaShowDialog: boolean = false;
@@ -64,8 +65,6 @@ export class ArtistaListComponent implements OnInit {
       console.log(artista) 
     }
 
-   
-
     deleteById(artista: Artista) {
       this.confirmationService.confirm({
           target:  event.target,
@@ -74,16 +73,25 @@ export class ArtistaListComponent implements OnInit {
           rejectLabel: 'Não',
           icon: 'pi pi-exclamation-triangle',
           accept: () => {
-            this.artistaService.deleteById(artista.id).subscribe(artista => this.getAllArtistas());
-            this.messageService.add({
-              severity: "success",
-              detail: artista.nome + " foi deletado."
-            });
+            this.artistaService.deleteById(artista.id).subscribe(artista => {
+              this.getAllArtistas()
+            }, err => {
+              this.messageService.add({
+                severity: "error",
+                detail: "O artista não pode ser deletado pois possui músicas associadas."
+              });
+            }, () => {
+              this.messageService.add({
+                severity: "success",
+                detail: artista.nome + " foi deletado."
+              });
+            }
+            );
+            
           }
       });
-  }
+    }
 
-  
 
     showArtista(id: number){
       this.artistaService.findById(id).subscribe(data => this.artista = data);
