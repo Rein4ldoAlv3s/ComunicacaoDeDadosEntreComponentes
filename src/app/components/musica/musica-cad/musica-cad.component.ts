@@ -65,6 +65,7 @@ export class MusicaCadComponent implements OnInit{
    changeValue(musica: Musica){
     console.log(musica)
     if(musica.nome === '' && musica.artista === '' && musica.letraDaMusica === '' && musica.traducao === ''){
+      musica.id = 0
       this.cancelarButton = false
       this.editarButton = false
       this.cadastrarButton = true
@@ -75,6 +76,7 @@ export class MusicaCadComponent implements OnInit{
   }
 
   create(){
+    console.log("criando")
     console.log(this.musica)
     this.musicaService.create(this.musica).subscribe(data => {
       this.musicaListComponent.getAllMusicas(),
@@ -113,6 +115,7 @@ export class MusicaCadComponent implements OnInit{
 
 
   cancel(){
+   this.musica.id = 0;
    this.musica.nome = '';
    this.musica.artista = null;
    this.musica.letraDaMusica = '';
@@ -124,6 +127,7 @@ export class MusicaCadComponent implements OnInit{
   }
 
   editButton(){
+    console.log('editando')
     this.musicaService.update(this.musica).subscribe(resposta => {
     this.musicaListComponent.getAllMusicas()
     this.edit = false

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ConfirmationService, MessageService, PrimeNGConfig } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -6,6 +6,8 @@ import { Artista } from 'src/app/services/artista';
 import { ArtistaService } from 'src/app/services/artista.service';
 import { Musica } from 'src/app/services/musica';
 import { MusicaService } from 'src/app/services/musica.service';
+import { Table } from 'primeng/table'
+
 
 @Component({
   selector: 'app-musica-list',
@@ -40,6 +42,8 @@ export class MusicaListComponent implements OnInit {
   @Output() editEventEmitter = new EventEmitter()
   
   musicaShowDialog: boolean = false;
+
+  @ViewChild('dt') dt: Table | undefined;
   
 
     constructor(
@@ -63,13 +67,18 @@ export class MusicaListComponent implements OnInit {
 
     getAllMusicas(){
       this.musicaService.getAll().subscribe(data => this.musicas = data);
-    }
+    }                                     
     
 
     editMusica(id: number){
       this.editEventEmitter.emit(id)
     }
 
+    getEventValue($event:any) :string {
+      return $event.target.value;
+    } 
+   
+  
    
 
     deleteById(musica: Musica) {

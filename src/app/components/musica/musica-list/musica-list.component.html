@@ -1,8 +1,8 @@
 <div style="display:flex; flex-direction:column; padding-right: 14px;">
 
-    <p-table #dt [resizableColumns]="true" [scrollable]="true" styleClass="p-datatable-gridlines"
-        responsiveLayout="scroll" [columns]="cols" [value]="musicas" [paginator]="true" [rows]="15"
-        [rowsPerPageOptions]="[15,20,50]" totalRecords:4 pageLinks:3>
+    <p-table #dt [resizableColumns]="true" [scrollable]="true" styleClass="p-datatable-gridlines" [globalFilterFields]="['nome', 'artista.nome', 'artista.integrantes', 'artista.generoMusical']"
+        responsiveLayout="scroll" [columns]="cols" [value]="musicas" [paginator]="true" [rows]="20" 
+        [rowsPerPageOptions]="[5,20,50]" totalRecords:4 pageLinks:3>
         <ng-template pTemplate="caption">
             <div style="display: flex; justify-content: space-between;
         align-items: flex-end;">
@@ -10,8 +10,8 @@
                     <h3>Músicas</h3>
                 </div>
                 <div>
-                    <input type="text" pInputText size="50" placeholder="Pesquisar"
-                        (input)="dt.filterGlobal($any($event.target).value, 'contains')" style="width:225px">
+                    <input pInputText type="text" (input)="dt.filterGlobal(getEventValue($event), 'contains')" placeholder="Search keyword" />
+
                 </div>
             </div>
 
@@ -39,7 +39,7 @@
         <ng-template pTemplate="body" let-musica>
             <tr>
 
-                <td style="flex-basis:20%" [style]="{'width':'150px'}">{{musica.nome}}</td>
+                <td style="flex-basis:20%" [style]="{'width':'150px'}"><a routerLink="/musicas/{{musica.id}}"> {{musica.nome}}</a></td>
                 <td style="flex-basis:20%" [style]="{'width':'150px'}">{{musica.artista.nome}}</td>
                 <td style="flex-basis:20%" [style]="{'width':'150px'}">{{musica.artista.integrantes}}</td>
                 <td style="flex-basis:20%" [style]="{'width':'150px'}">{{musica.artista.generoMusical}}</td>

@@ -42,6 +42,8 @@ import { AlbumComponent } from './components/album/album.component';
 import { MusicaListComponent } from './components/musica/musica-list/musica-list.component';
 import { AutoCompleteModule } from "primeng/autocomplete";
 import { MusicaCadComponent } from './components/musica/musica-cad/musica-cad.component';
+import { MusicaLetraComponent } from './components/musica/musica-letra/musica-letra.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ import { MusicaCadComponent } from './components/musica/musica-cad/musica-cad.co
     HomeComponent,
     AlbumComponent,
     MusicaListComponent,
-    MusicaCadComponent
+    MusicaCadComponent,
+    MusicaLetraComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

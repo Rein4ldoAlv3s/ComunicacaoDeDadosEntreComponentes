@@ -1,0 +1,37 @@
+#musica{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10px;
+    justify-content: center;
+}
+
+#nomeMusica{
+    font-size: 2.3rem;
+}
+
+#nomeArtista{
+    font-size: 1.1rem;
+}
+
+#letra{
+    display: flex;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    color: rgba(255, 255, 255, 0.662);
+}
+
+#musicaartista{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#letra > p:nth-child(1) {
+    padding-right: 40px;
+}
+
+#letra p{
+    white-space: pre-line;
+    text-align: center
+}

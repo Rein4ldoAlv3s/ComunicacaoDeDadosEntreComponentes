@@ -80,6 +80,7 @@ export class ArtistaCadComponent implements OnInit{
 
 
   cancel(){
+   this.artista.id = 0;
    this.artista.nome = '';
    this.artista.generoMusical = '';
    this.artista.paisDeOrigem = '';
@@ -94,6 +95,7 @@ export class ArtistaCadComponent implements OnInit{
   changeValue(artista: Artista){
     console.log(artista)
     if(artista.nome === '' && artista.generoMusical === '' && artista.paisDeOrigem === '' && artista.integrantes === ''){
+      artista.id = 0
       console.log(artista)
       this.cancelarButton = false
       this.editarButton = false

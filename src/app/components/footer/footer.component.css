@@ -1,0 +1,27 @@
+a {
+    text-decoration: none;
+    color: white;
+    margin-left: 15px;
+    padding: 10px 0;
+    transition: 0.2s;
+}
+
+a:hover {
+    opacity: 1;
+    color: #9FA8DA;
+}
+
+.titulo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+:host ::ng-deep .p-toolbar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
