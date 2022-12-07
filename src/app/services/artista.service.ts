@@ -4,6 +4,7 @@ import { Artista } from './artista';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
+import { Imagem } from './imagem';
 
 
 @Injectable({
@@ -12,6 +13,13 @@ import { BehaviorSubject } from 'rxjs';
 export class ArtistaService {
 
     baseUrl: string = environment.baseUrlArtista;
+
+    artista: Artista = {
+        nome: '',
+        generoMusical: '',
+        paisDeOrigem: '',
+        integrantes: ''
+      }
 
     constructor(private http: HttpClient) { }
 
@@ -35,9 +43,11 @@ export class ArtistaService {
         return this.http.delete<Artista>(url);
     }
 
-    create(artista: Artista): Observable<Artista> {
+    
+
+    create(formData: FormData): Observable<Artista> {
         const url = this.baseUrl + "/artistas";
-        return this.http.post<Artista>(url, artista);
+        return this.http.post<Artista>(url, formData);
     }
 
     update(artista: Artista): Observable<Artista> {

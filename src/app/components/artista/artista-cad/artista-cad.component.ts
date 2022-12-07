@@ -30,7 +30,11 @@ export class ArtistaCadComponent implements OnInit{
 
   artistas: Artista[] = []
 
+
   submitted = true
+
+  fileToUpload: File | null = null;
+
 
   constructor(private service: ArtistaService,
     private router: Router, private messageService: MessageService, 
@@ -42,18 +46,68 @@ export class ArtistaCadComponent implements OnInit{
     this.cadastrarButton = true
   }
 
+  public formData = new FormData();
+  ReqJson: any = {};
+
+  uploadedFiles: any[] = [];
+
+  file: File //imagem do artista
+
+  myUploader(event: any) {
+    
+    this.uploadedFiles = []
+
+    for(let file of event.files) {
+      this.file = file
+      if(this.formData.has("file") ){
+        this.formData.set("file", this.file, this.file.name)
+      }
+      else{
+        this.formData.append( "file", this.file, this.file.name);      
+      }
+      this.uploadedFiles.push(file);
+    }
+    
+  }
+
+  cancelarUpload(){
+    this.uploadedFiles = []
+    this.formData.delete("file")
+  }
+
+  removerUpload(){
+    this.uploadedFiles = []
+    this.formData.delete("file")
+  }
+  
+ 
+
+
   create(){
-    this.service.create(this.artista).subscribe(data => {
+    this.ReqJson["nome"] = this.artista.nome
+    this.ReqJson["generoMusical"] = this.artista.generoMusical
+    this.ReqJson["paisDeOrigem"] = this.artista.paisDeOrigem
+    this.ReqJson["integrantes"] = this.artista.integrantes
+
+    if(this.formData.has('artista')){
+      this.formData.set('artista', JSON.stringify( this.ReqJson ))
+    }
+    else{
+      this.formData.append('artista', JSON.stringify( this.ReqJson ))
+    }
+
+    this.service.create(this.formData).subscribe(data => {
       this.artistaListComponent.getAllArtistas(),
-      console.log(this.artista),
       this.messageService.add({severity:'success', detail: this.artista.nome + ' foi cadastrado!'});
       this.artista = {},
       this.submitted = true;
       this.cancelarButton = false
-
+      this.uploadedFiles = []
+      this.cancel()
     }, err => {
+      this.cancel()
+      this.uploadedFiles = []
       this.cancelarButton = false
-      console.log(err)
       this.submitted = false;
       if(err.error.error.match('Erro')){
         this.messageService.add({severity:'error', detail: 'O artista não foi cadastrado. Erro na validação dos campos!'});
@@ -66,6 +120,11 @@ export class ArtistaCadComponent implements OnInit{
     
     
   }
+
+ 
+
+  
+
 
   movieSelectedEventEmitter(artista: Artista): void {
       this.editarButton = true,
@@ -88,15 +147,14 @@ export class ArtistaCadComponent implements OnInit{
    this.submitted = true;
    this.cadastrarButton = true;
    this.cancelarButton = false;
+   this.uploadedFiles = []
    this.editarButton = false
 
   }
 
   changeValue(artista: Artista){
-    console.log(artista)
     if(artista.nome === '' && artista.generoMusical === '' && artista.paisDeOrigem === '' && artista.integrantes === ''){
       artista.id = 0
-      console.log(artista)
       this.cancelarButton = false
       this.editarButton = false
       this.cadastrarButton = true
@@ -108,7 +166,6 @@ export class ArtistaCadComponent implements OnInit{
   }
 
   editButton(){
-    console.log(this.artista)
 
     this.service.update(this.artista).subscribe(resposta => {
       this.artistaListComponent.getAllArtistas(),
@@ -117,6 +174,8 @@ export class ArtistaCadComponent implements OnInit{
     this.messageService.add({severity:'success', detail: this.artista.nome + ' foi atualizado!'});
     this.submitted = true;
     this.cancelarButton = false
+    this.editarButton = false
+    this.cadastrarButton = true
   }
 
   

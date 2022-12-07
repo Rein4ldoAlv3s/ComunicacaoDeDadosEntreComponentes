@@ -10,7 +10,7 @@
                     <h3>Músicas</h3>
                 </div>
                 <div>
-                    <input pInputText type="text" (input)="dt.filterGlobal(getEventValue($event), 'contains')" placeholder="Search keyword" />
+                    <input pInputText type="text" (input)="dt.filterGlobal(getEventValue($event), 'contains')" placeholder="Pesquisar" />
 
                 </div>
             </div>
@@ -76,5 +76,7 @@
         <p> {{musica.artista.integrantes}} </p><br>
         <p style="font-weight: bold; color: rgba(204, 204, 204, 0.57); font-size: 1.3rem">Gênero Musical </p>
         <p> {{musica.artista.generoMusical}} </p><br>
+        
+
     </div>
 </p-dialog>

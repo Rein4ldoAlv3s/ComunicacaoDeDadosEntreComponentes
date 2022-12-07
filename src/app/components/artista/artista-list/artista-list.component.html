@@ -76,5 +76,12 @@
         <p> {{artista.paisDeOrigem}} </p><br>
         <p style="font-weight: bold; color: rgba(204, 204, 204, 0.57); font-size: 1.3rem">Integrantes </p>
         <p> {{artista.integrantes}} </p><br>
+
+        <ng-template [ngIf]="artista.imagem != null">
+            <img src="http://localhost:8080/image/fileSystem/{{artista.imagem.name}}" height="300px" width="300px" alt="">
+        </ng-template>
+
+        
+
     </div>
 </p-dialog>

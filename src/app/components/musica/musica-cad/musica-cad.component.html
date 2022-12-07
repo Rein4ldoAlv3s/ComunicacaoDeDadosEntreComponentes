@@ -21,6 +21,14 @@
                 <small class="p-invalid" *ngIf="!submitted && !musica.artista">O campo deve possuir Gênero
                     Musical!</small>
             </div>
+            <div class="form-element">
+                <span class="p-float-label">
+                    <input [(ngModel)]="musica.linkYoutube" type="text" id="inputtext" (change)="changeValue(musica)"
+                        pInputText>
+                    <label for="inputtext">Link YouTube</label>
+                </span>
+                <small class="p-invalid" *ngIf="!submitted && !musica.linkYoutube">O campo deve possuir o link do YouTube!</small>
+            </div>
 
             <div class="form-element">
                 <span class="p-float-label">
@@ -39,6 +47,7 @@
                 </span>
                 <small class="p-invalid" *ngIf="!submitted && !musica.traducao">O campo deve possuir tradução!</small>
             </div>
+            
 
             <div style="display: flex; justify-content: space-evenly; align-items: center;">
                 <button *ngIf="cadastrarButton===true" pButton pRipple type="button" label="Cadastrar"

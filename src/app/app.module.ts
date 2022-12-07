@@ -44,6 +44,8 @@ import { AutoCompleteModule } from "primeng/autocomplete";
 import { MusicaCadComponent } from './components/musica/musica-cad/musica-cad.component';
 import { MusicaLetraComponent } from './components/musica/musica-letra/musica-letra.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { YouTubePlayerModule } from '@angular/youtube-player';
+
 
 @NgModule({
   declarations: [
@@ -57,6 +59,7 @@ import { FooterComponent } from './components/footer/footer.component';
     MusicaCadComponent,
     MusicaLetraComponent,
     FooterComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -94,7 +97,8 @@ import { FooterComponent } from './components/footer/footer.component';
     InputNumberModule,
     ConfirmDialogModule,
     ReactiveFormsModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    YouTubePlayerModule
 
   ],
   providers: [MessageService, ConfirmationService],

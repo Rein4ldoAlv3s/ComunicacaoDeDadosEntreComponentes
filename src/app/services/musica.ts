@@ -5,5 +5,6 @@ export interface Musica {
     nome?:string;
     letraDaMusica?:string;
     traducao?:string;
-    artista?:Artista
+    artista?:Artista;
+    linkYoutube?:string
 }

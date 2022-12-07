@@ -4,6 +4,7 @@
     align-items: center;
     padding-top: 10px;
     justify-content: center;
+    
 }
 
 #nomeMusica{
@@ -34,4 +35,17 @@
 #letra p{
     white-space: pre-line;
     text-align: center
+}
+
+#separacao{
+    
+}
+
+#player{
+    position: fixed;
+    padding: 10px;
+    top: 80%;
+    left: 92%;
+    margin-top: -100px;
+    margin-left: -229px;
 }

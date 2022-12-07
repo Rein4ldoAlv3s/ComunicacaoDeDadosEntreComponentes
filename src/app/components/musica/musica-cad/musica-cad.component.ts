@@ -8,6 +8,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { MusicaListComponent } from '../musica-list/musica-list.component';
 import { MusicaService } from 'src/app/services/musica.service';
 import { Musica } from 'src/app/services/musica';
+import { YoutubeValidationService } from 'src/app/services/youtube-validation.service';
 
 @Component({
   selector: 'app-musica-cad',
@@ -28,7 +29,8 @@ export class MusicaCadComponent implements OnInit{
     nome: '',
     letraDaMusica: '',
     traducao: '',
-    artista: this.artista
+    artista: this.artista,
+    linkYoutube: ''
   }
 
   value2: Artista[] = [];
@@ -53,7 +55,8 @@ export class MusicaCadComponent implements OnInit{
     private musicaService: MusicaService,
     private router: Router, private messageService: MessageService, 
     private primengConfig: PrimeNGConfig,
-    private artistaService: ArtistaService
+    private artistaService: ArtistaService,
+    private yt: YoutubeValidationService
   ){ 
     
   }
@@ -63,8 +66,7 @@ export class MusicaCadComponent implements OnInit{
   }
   
    changeValue(musica: Musica){
-    console.log(musica)
-    if(musica.nome === '' && musica.artista === '' && musica.letraDaMusica === '' && musica.traducao === ''){
+    if(musica.nome === '' && musica.artista === '' && musica.letraDaMusica === '' && musica.traducao === '' && musica.linkYoutube === ''){
       musica.id = 0
       this.cancelarButton = false
       this.editarButton = false
@@ -76,18 +78,19 @@ export class MusicaCadComponent implements OnInit{
   }
 
   create(){
-    console.log("criando")
-    console.log(this.musica)
+
+    this.musica.linkYoutube = this.yt.transformYoutubeLinks(this.musica.linkYoutube)
+    
     this.musicaService.create(this.musica).subscribe(data => {
       this.musicaListComponent.getAllMusicas(),
       this.submitted = true;
       this.cancelarButton = false
+
       
 
     }, err => {
       this.cancel()
       this.cancelarButton = false
-      console.log(err)
       this.submitted = false;
       if(err.error.error.match('Erro')){
         this.messageService.add({severity:'error', detail: 'A música não foi cadastrada. Erro na validação dos campos!'});
@@ -100,8 +103,6 @@ export class MusicaCadComponent implements OnInit{
       this.cancel()
     }
     );
-    
-    
   }
 
   movieSelectedEventEmitter(musicaId: number): void {
@@ -110,7 +111,6 @@ export class MusicaCadComponent implements OnInit{
     this.cancelarButton = true
     this.edit = true
     this.musicaService.findById(musicaId).subscribe(musica => this.musica = musica)
-    console.log(this.musica)
   }
 
 
@@ -119,6 +119,7 @@ export class MusicaCadComponent implements OnInit{
    this.musica.nome = '';
    this.musica.artista = null;
    this.musica.letraDaMusica = '';
+   this.musica.linkYoutube = '';
    this.musica.traducao = '';
    this.submitted = true;
    this.cadastrarButton = true;
@@ -127,14 +128,17 @@ export class MusicaCadComponent implements OnInit{
   }
 
   editButton(){
-    console.log('editando')
+    this.musica.linkYoutube = this.yt.transformYoutubeLinks(this.musica.linkYoutube)
     this.musicaService.update(this.musica).subscribe(resposta => {
     this.musicaListComponent.getAllMusicas()
     this.edit = false
-    this.messageService.add({severity:'success', detail: this.musica.nome + ' foi atualizado!'});
     this.submitted = true;
     this.cancelarButton = false
+    this.editarButton = false
+    this.cadastrarButton = true
+    this.messageService.add({severity:'success', detail: this.musica.nome + ' foi atualizado!'});
     this.cancel()
+    
     }, err =>{
       if(err.error.error.match('Já existe')){
         this.messageService.add({severity:'error', detail: err.error.error});
@@ -149,9 +153,8 @@ export class MusicaCadComponent implements OnInit{
     this.artistaService.findByNome(query).subscribe(artista => {
       this.filteredArtistas = artista
     })
-    
-    
   }
+  
   
 
 }

@@ -33,7 +33,20 @@
                 </span>
                 <small class="p-invalid" *ngIf="!submitted && !artista.integrantes">O campo deve possuir integrantes!</small>
             </div>
-            
+
+            <div class="form-element">
+                <p-fileUpload [files]="uploadedFiles" name="myfile[]" [multiple]="false" [showUploadButton]="false" cancelLabel="Cancelar" (onClear)="cancelarUpload()" (onRemove)="removerUpload()" chooseLabel="Escolher imagem" (onSelect)="myUploader($event)" accept="image/*" >
+                    <ng-template pTemplate="content">
+                        <ul *ngIf="uploadedFiles.length">
+                            <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                        </ul>
+                    </ng-template>
+                </p-fileUpload>
+            </div>
+           
+
+
+
             <div style="display: flex; justify-content: space-evenly; align-items: center;">
                 <button *ngIf="cadastrarButton===true" pButton pRipple type="button" label="Cadastrar" (click)="create()"
                 class="p-button-outlined"></button>

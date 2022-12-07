@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Artista } from 'src/app/services/artista';
 import { ArtistaService } from 'src/app/services/artista.service';
+import { Imagem } from 'src/app/services/imagem';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-artista-list',
@@ -15,13 +17,25 @@ export class ArtistaListComponent implements OnInit {
   
   artistas: Artista[] = [];
 
+  imagem: Imagem = {
+    id: 0,
+    name: '',
+    filePath: '',
+    type: ''
+  }
+
   artista: Artista = {
     nome: '',
     generoMusical: '',
     paisDeOrigem: '',
     integrantes: '',
-    id: 0
+    id: 0,
+    imagem: this.imagem
   };
+
+  
+
+  
 
   cols: any[] = [];
 
@@ -29,6 +43,7 @@ export class ArtistaListComponent implements OnInit {
 
   temporary: number = 0;
 
+  nomeImagem: string;
 
   @Output() editEventEmitter = new EventEmitter()
   
@@ -41,6 +56,7 @@ export class ArtistaListComponent implements OnInit {
       private confirmationService: ConfirmationService,
       private router: Router,
       private messageService: MessageService,
+      private storageService: StorageService
     ) { }
 
     ngOnInit() {
@@ -59,10 +75,18 @@ export class ArtistaListComponent implements OnInit {
       this.artistaService.getAll().subscribe(data => this.artistas = data);
     }
     
+    getImagem(pathImagem: string){
+      console.log('dfdfsd')
+      this.storageService.findByNome(pathImagem)
+        .subscribe(imagem => {
+          imagem
+        }, err => {
+          return null
+        })
+    }
 
     editArtista(artista: Artista){
       this.editEventEmitter.emit(artista)     
-      console.log(artista) 
     }
 
     deleteById(artista: Artista) {

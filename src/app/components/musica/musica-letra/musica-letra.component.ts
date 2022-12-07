@@ -16,6 +16,10 @@ export class MusicaLetraComponent implements OnInit {
 
   IdMusica: number;
 
+  apiLoaded = false;
+  
+  
+  
   artista: Artista = {
     id: 0,
     nome: '',
@@ -29,7 +33,8 @@ export class MusicaLetraComponent implements OnInit {
     nome: '',
     letraDaMusica: '',
     traducao: '',
-    artista: this.artista
+    artista: this.artista,
+    linkYoutube: ''
   }
 
   
@@ -41,6 +46,12 @@ export class MusicaLetraComponent implements OnInit {
 
   ngOnInit(): void {
     this.getLetraMusica()
+    if (!this.apiLoaded) {
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      document.body.appendChild(tag);
+      this.apiLoaded = true;
+    }
   }
 
   getLetraMusica(){
@@ -49,5 +60,7 @@ export class MusicaLetraComponent implements OnInit {
       this.musica = musica
     })
   }
+
+  
 
 }
