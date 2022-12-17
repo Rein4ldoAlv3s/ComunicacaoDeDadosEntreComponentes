@@ -26,11 +26,16 @@ export class ArtistaService {
     getAll(): Observable<Artista[]>{
         const url = this.baseUrl + "/artistas/";
         return this.http.get<Artista[]>(url);
-    }
+    }  
 
     findByNome(nome : string): Observable<Artista[]>{
         const url = this.baseUrl + "/artistas/nomeArtista?nome=" + nome;
         return this.http.get<Artista[]>(url);
+    }
+
+    findImagemByNome(nome: string): Observable<Blob> {
+        const url = this.baseUrl + "/image/fileSystem/" + nome
+        return this.http.get(url, {responseType: 'blob'})
     }
 
     findById(id : any): Observable<Artista>{
@@ -50,9 +55,9 @@ export class ArtistaService {
         return this.http.post<Artista>(url, formData);
     }
 
-    update(artista: Artista): Observable<Artista> {
-        const url = this.baseUrl + "/artistas/" + artista.id;
-        return this.http.put<Artista>(url, artista);
+    update(formData: FormData, id: number): Observable<Artista> {
+        const url = this.baseUrl + "/artistas/" + id;
+        return this.http.put<Artista>(url, formData);
     }
 
   

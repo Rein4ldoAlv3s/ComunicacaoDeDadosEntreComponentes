@@ -35,10 +35,12 @@
             </div>
 
             <div class="form-element">
-                <p-fileUpload [files]="uploadedFiles" name="myfile[]" [multiple]="false" [showUploadButton]="false" cancelLabel="Cancelar" (onClear)="cancelarUpload()" (onRemove)="removerUpload()" chooseLabel="Escolher imagem" (onSelect)="myUploader($event)" accept="image/*" >
+                <p-fileUpload [files]="uploadedFiles" name="myfile[]" [multiple]="false" [showUploadButton]="false" cancelLabel="Cancelar" (onClear)="cancelarUpload()" (onRemove)="removerUpload()" [previewWidth]=50 chooseLabel="Escolher imagem" (onSelect)="myUploader($event)" accept="image/*" >
                     <ng-template pTemplate="content">
-                        <ul *ngIf="uploadedFiles.length">
-                            <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                        <ul *ngIf="uploadedFiles.length" >
+                            <li *ngFor="let file of uploadedFiles" > 
+                                <ng-template  [ngIf]="uploadedFiles != null"> {{file.name}} - {{file.size}} bytes  </ng-template>
+                            </li>
                         </ul>
                     </ng-template>
                 </p-fileUpload>
@@ -61,7 +63,7 @@
         </div>
     </div>
 
-    <app-artista-list id="div-list" (editEventEmitter)="movieSelectedEventEmitter($event)"></app-artista-list>
+    <app-artista-list id="div-list" (editEventEmitter)="SelectedEventEmitter($event)"></app-artista-list>
 
 </div>
 

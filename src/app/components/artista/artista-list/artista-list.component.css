@@ -85,3 +85,12 @@
 	}
 }
  
+#dialog-content{
+	display: flex;
+	justify-content: space-between;
+}
+
+#image-content{
+	height: fit-content; 
+	align-self: center;
+}

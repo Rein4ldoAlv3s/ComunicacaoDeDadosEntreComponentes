@@ -29,7 +29,7 @@
                     País de Origem
                 </th>
                 <th pResizableColumn style="flex-basis:20%" [style]="{'width':'150px'}">
-                    País de Origem
+                    Integrantes
                 </th>
                 <th pResizableColumn style="flex-basis:20%" [style]="{'width':'150px'}">
 
@@ -67,21 +67,25 @@
 <p-confirmPopup ></p-confirmPopup>
 <p-dialog header="Mais informações" [(visible)]="artistaShowDialog" [style]="{width: '50vw'}" [baseZIndex]="10000">
 
-    <div style="font-size: 1.2rem;">
-        <p style="font-weight: bold; color: rgba(204, 204, 204, 0.57); font-size: 1.3rem">Nome </p>
-        <p> {{artista.nome}} </p><br>
-        <p style="font-weight: bold; color: rgba(204, 204, 204, 0.57); font-size: 1.3rem">Gênero Musical </p>
-        <p> {{artista.generoMusical}} </p><br>
-        <p style="font-weight: bold; color: rgba(204, 204, 204, 0.57); font-size: 1.3rem">País de Origem </p>
-        <p> {{artista.paisDeOrigem}} </p><br>
-        <p style="font-weight: bold; color: rgba(204, 204, 204, 0.57); font-size: 1.3rem">Integrantes </p>
-        <p> {{artista.integrantes}} </p><br>
+    <div id="dialog-content">
 
+        <div style="font-size: 1.2rem;">
+            <p style="font-weight: bold; color: rgba(204, 204, 204, 0.57); font-size: 1.3rem">Nome </p>
+            <p> {{artista.nome}} </p><br>
+            <p style="font-weight: bold; color: rgba(204, 204, 204, 0.57); font-size: 1.3rem">Gênero Musical </p>
+            <p> {{artista.generoMusical}} </p><br>
+            <p style="font-weight: bold; color: rgba(204, 204, 204, 0.57); font-size: 1.3rem">País de Origem </p>
+            <p> {{artista.paisDeOrigem}} </p><br>
+            <p style="font-weight: bold; color: rgba(204, 204, 204, 0.57); font-size: 1.3rem">Integrantes </p>
+            <p> {{artista.integrantes}} </p><br>
+
+        </div>
+        
         <ng-template [ngIf]="artista.imagem != null">
-            <img src="http://localhost:8080/image/fileSystem/{{artista.imagem.name}}" height="300px" width="300px" alt="">
+            <img id="image-content" src="http://localhost:8080/image/fileSystem/{{artista.imagem.name}}" height="300px" width="300px" alt="">
+
         </ng-template>
 
-        
-
     </div>
+
 </p-dialog>

@@ -6,6 +6,8 @@ import { ArtistaListComponent } from '../artista-list/artista-list.component';
 import {MessageService} from 'primeng/api';
 import { PrimeNGConfig } from 'primeng/api';
 import { FormControl, Validators } from '@angular/forms';
+import { Imagem } from 'src/app/services/imagem';
+import { timestamp } from 'rxjs';
 
 @Component({
   selector: 'app-artista-cad',
@@ -13,12 +15,22 @@ import { FormControl, Validators } from '@angular/forms';
   styleUrls: ['./artista-cad.component.css']
 })
 export class ArtistaCadComponent implements OnInit{
+
+  imagem: Imagem = {
+    id: 0,
+    name: '',
+    filePath: '',
+    type: ''
+  }
+
+  imgUrl: any;
   
   artista: Artista = {
     nome: '',
     generoMusical: '',
     paisDeOrigem: '',
-    integrantes: ''
+    integrantes: '',
+    imagem: this.imagem
   }
 
   cadastrarButton: boolean = false;
@@ -55,29 +67,41 @@ export class ArtistaCadComponent implements OnInit{
 
   myUploader(event: any) {
     
+    
     this.uploadedFiles = []
 
     for(let file of event.files) {
-      this.file = file
+      this.file = file    
+
       if(this.formData.has("file") ){
         this.formData.set("file", this.file, this.file.name)
       }
       else{
-        this.formData.append( "file", this.file, this.file.name);      
+        this.formData.append( "file", this.file, this.file.name);   
       }
       this.uploadedFiles.push(file);
     }
     
   }
 
+
+
   cancelarUpload(){
     this.uploadedFiles = []
-    this.formData.delete("file")
+    
+    if(this.formData.has("file") ){
+      this.formData.delete("file")
+    }
+
   }
 
   removerUpload(){
     this.uploadedFiles = []
-    this.formData.delete("file")
+
+    if(this.formData.has("file") ){
+      this.formData.delete("file")
+    }
+    
   }
   
  
@@ -124,17 +148,48 @@ export class ArtistaCadComponent implements OnInit{
  
 
   
+  
 
 
-  movieSelectedEventEmitter(artista: Artista): void {
+
+  SelectedEventEmitter(artista: Artista): void {
       this.editarButton = true,
-      this.cadastrarButton = false
-      this.cancelarButton = true
+      this.cadastrarButton = false,
+      this.cancelarButton = true,
       this.artista.integrantes = artista.integrantes,
       this.artista.id = artista.id,
       this.artista.nome = artista.nome,
       this.artista.generoMusical = artista.generoMusical,
-      this.artista.paisDeOrigem = artista.paisDeOrigem
+      this.artista.paisDeOrigem = artista.paisDeOrigem,
+      this.artista.imagem = artista.imagem
+
+      console.log(this.artista.imagem)
+
+      if(this.artista.imagem == null){
+        this.uploadedFiles = []
+      }
+
+      if(this.artista.imagem != null){
+
+        let filee: Blob
+        this.service.findImagemByNome(this.artista.imagem.name)
+        .subscribe(imagem => filee = imagem)
+        
+        let file = new File([filee], this.artista.imagem.name, {type: "image/jpeg", lastModified: Date.now()});
+
+        if(this.formData.has("file") ){
+          this.formData.set("file", file, file.name)
+        }
+        else{
+          this.formData.append( "file", file, file.name);   
+        }
+
+        this.uploadedFiles = []
+        this.uploadedFiles.push(file)
+
+      }
+     
+
   }
 
 
@@ -167,15 +222,46 @@ export class ArtistaCadComponent implements OnInit{
 
   editButton(){
 
-    this.service.update(this.artista).subscribe(resposta => {
+    if(this.artista.imagem != null){
+      this.ReqJson["imagem"] = this.artista.imagem
+    }
+
+    this.ReqJson["nome"] = this.artista.nome
+    this.ReqJson["generoMusical"] = this.artista.generoMusical
+    this.ReqJson["paisDeOrigem"] = this.artista.paisDeOrigem
+    this.ReqJson["integrantes"] = this.artista.integrantes
+
+    if(this.formData.has('artista')){
+      this.formData.set('artista', JSON.stringify( this.ReqJson ))
+    }
+    else{
+      this.formData.append('artista', JSON.stringify( this.ReqJson ))
+    }
+
+
+    this.service.update(this.formData, this.artista.id).subscribe(resposta => {
       this.artistaListComponent.getAllArtistas(),
-      this.artista = {}
+      this.messageService.add({severity:'success', detail: this.artista.nome + ' foi atualizado!'});
+      this.cancel()
+      this.submitted = true;
+      this.cancelarButton = false
+      this.editarButton = false
+      this.cadastrarButton = true
+      this.uploadedFiles = []
+      if(this.formData.has("file") ){
+        this.formData.delete("file")
+      }
+      this.artista.imagem = null
+      
+    }, err => {
+      if(err.error.error.match('Erro')){
+        this.messageService.add({severity:'error', detail: 'O artista não foi cadastrado. Erro na validação dos campos!'});
+      }
+      if(err.error.error.match('Informe outra imagem')){
+        this.messageService.add({severity:'error', detail: err.error.error});
+      }
     });
-    this.messageService.add({severity:'success', detail: this.artista.nome + ' foi atualizado!'});
-    this.submitted = true;
-    this.cancelarButton = false
-    this.editarButton = false
-    this.cadastrarButton = true
+    
   }
 
   

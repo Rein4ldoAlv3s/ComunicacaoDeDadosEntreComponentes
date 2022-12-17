@@ -45,6 +45,7 @@ import { MusicaCadComponent } from './components/musica/musica-cad/musica-cad.co
 import { MusicaLetraComponent } from './components/musica/musica-letra/musica-letra.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { YouTubePlayerModule } from '@angular/youtube-player';
+import {ImageModule} from 'primeng/image';
 
 
 @NgModule({
@@ -98,7 +99,8 @@ import { YouTubePlayerModule } from '@angular/youtube-player';
     ConfirmDialogModule,
     ReactiveFormsModule,
     AutoCompleteModule,
-    YouTubePlayerModule
+    YouTubePlayerModule,
+    ImageModule
 
   ],
   providers: [MessageService, ConfirmationService],
